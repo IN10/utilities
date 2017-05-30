@@ -9,7 +9,7 @@ PROJECT=${1:-}
 
 # Print the usage instructions
 function print_usage {
-    echo "Usage: deploy [username]"
+    echo "Usage: deploy_production [username]"
     exit 1
 }
 
