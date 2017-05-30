@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # Input parameter
-PROJECT=$1
+PROJECT=${1:-}
 
 # Print the usage instructions
 function print_usage {
