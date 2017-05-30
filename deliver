@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euo pipefail
+
+# Input parameter
+SOURCE=${1:-}
+TARGET=${2:-}
+
+# Print the usage instructions
+function print_usage {
+    echo "Usage: deliver [source] [target]"
+    exit 1
+}
+
+# Check inputs: must pass at least one parameter
+if [[ -z "$SOURCE" ]] || [[ -z "$TARGET" ]]; then
+    print_usage
+fi
+
+git fetch
+git checkout $SOURCE
+git rebase origin/$SOURCE
+git checkout $TARGET
+git rebase origin/$TARGET
+git merge $SOURCE
+git push origin $SOURCE
+git push --atomic origin $SOURCE $TARGET
+git checkout $SOURCE

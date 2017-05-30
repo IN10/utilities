@@ -1,0 +1,37 @@
+#!/usr/bin/ruby
+
+require 'yaml'
+
+# Usage information if no parameters are passed
+name = ARGV[0]
+abort "Usage: provision [name]" unless name
+
+# Check the homestead file exists
+path = '/Users/jakobbuis/homestead/Homestead.yaml'
+if File.exist? path then
+    settings = YAML::load(File.read(path))
+else
+    abort "#{path} not found or not readable"
+end
+
+# Check for previous deployment
+if settings['databases'].include? name
+    abort "Project #{name} has been created previously"
+end
+
+# Add settings
+settings['databases'] << name
+settings['sites'] << {
+    'map' => "#{name}.lcl",
+    'to' => "/home/vagrant/code/#{name}/public",
+}
+
+# Write updated settings and reprovision vagrant configuration
+File.write(path, settings.to_yaml)
+puts "Updated settings"
+puts "Reloading vagrant configuration"
+`vagrant reload --provision`
+
+# Open browser
+`open http://#{name}.lcl`
+puts "All done"

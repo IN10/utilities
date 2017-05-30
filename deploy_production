@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Exit script on (almost) all errors
+# instead of continuing silently
+set -euo pipefail
+
+# Input parameter
+PROJECT=$1
+
+# Print the usage instructions
+function print_usage {
+    echo "Usage: deploy [username]"
+    exit 1
+}
+
+# Function that runs on the server
+function update_code {
+    cd www/
+    git fetch -p
+    git checkout master
+    git merge origin/master
+    if [ -f composer.lock ]; then
+        echo "Found composer: installing"
+        composer install --no-interaction --prefer-dist --optimize-autoloader
+    else
+        echo "No composer found"
+    fi
+    if [ -f artisan ]; then
+        echo "Found artisan: migrating"
+        php artisan migrate
+    else
+        echo "No artisan found"
+    fi
+    exit
+}
+
+# Check inputs: must pass at least one parameter
+if [[ -z "$PROJECT" ]]; then
+    print_usage
+fi
+
+# Login to the server, copy all functions to it, and run the update function
+ssh $PROJECT@in10-web-p01.sc.nines.nl "$(typeset -f); update_code"
+
+echo "Done"
