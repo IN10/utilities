@@ -9,9 +9,9 @@
 
 ### Deploy to Production
 ```bash
-deploy_production username
+deploy_production username [server]
 ```
-Login to the production account, update the code, composer and migrations.
+Login to the production account, update the code, composer and migrations. Server is optional, defaults to 01.
 
 ### Deliver code to branch
 ```bash
