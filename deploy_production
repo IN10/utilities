@@ -6,10 +6,12 @@ set -euo pipefail
 
 # Input parameter
 PROJECT=${1:-}
+SERVER=${2:-01}
 
 # Print the usage instructions
 function print_usage {
-    echo "Usage: deploy_production [username]"
+    echo "Usage: deploy_production [username] [server]"
+    echo "Valid servers are 01 and 02. Optional, default 01"
     exit 1
 }
 
@@ -40,6 +42,6 @@ if [[ -z "$PROJECT" ]]; then
 fi
 
 # Login to the server, copy all functions to it, and run the update function
-ssh $PROJECT@in10-web-p01.sc.nines.nl "$(typeset -f); update_code"
+ssh $PROJECT@in10-web-p$SERVER.sc.nines.nl "$(typeset -f); update_code"
 
 echo "Done"
