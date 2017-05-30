@@ -4,14 +4,15 @@ require 'yaml'
 
 # Usage information if no parameters are passed
 name = ARGV[0]
-abort "Usage: provision [name]" unless name
+abort "Usage: vagrant_provision [name]" unless name
 
 # Check the homestead file exists
-path = '/Users/jakobbuis/homestead/Homestead.yaml'
-if File.exist? path then
-    settings = YAML::load(File.read(path))
+path = '../homestead/'
+configFile = "#{path}Homestead.yaml"
+if File.exist? configFile then
+    settings = YAML::load(File.read(configFile))
 else
-    abort "#{path} not found or not readable"
+    abort "#{configFile} not found or not readable"
 end
 
 # Check for previous deployment
@@ -27,10 +28,10 @@ settings['sites'] << {
 }
 
 # Write updated settings and reprovision vagrant configuration
-File.write(path, settings.to_yaml)
+File.write(configFile, settings.to_yaml)
 puts "Updated settings"
 puts "Reloading vagrant configuration"
-`vagrant reload --provision`
+`(cd #{path}; vagrant reload --provision)`
 
 # Open browser
 `open http://#{name}.lcl`
