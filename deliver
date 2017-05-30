@@ -5,15 +5,10 @@ set -euo pipefail
 SOURCE=${1:-}
 TARGET=${2:-}
 
-# Print the usage instructions
-function print_usage {
-    echo "Usage: deliver [source] [target]"
-    exit 1
-}
-
 # Check inputs: must pass at least one parameter
 if [[ -z "$SOURCE" ]] || [[ -z "$TARGET" ]]; then
-    print_usage
+    echo "Usage: deliver [source] [target]"
+    exit 1
 fi
 
 git fetch
