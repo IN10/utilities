@@ -5,6 +5,12 @@
 1. Clone the repository to your homefolder: `git clone git@github.com:IN10/utilities.git ~/utilities`.
 1. Add the folder to your path. On a Mac, open `/etc/paths` and add `/Users/<yourusername>/utilities` as the very first entry.
 
+## Assumptions
+These utilities, especially the `vagrant_*` commands, make a couple of assumptions on how your system is organised:
+1. Your projects are all `~/code/*`. For example, a project named "waterbus" on my PC would be in `/Users/jakobbuis/code/waterbus`.
+1. All projects have their web roots in `./code/{name}/public`. Moving the web root will require manual tuning.
+1. You have a single Homestead installation for all projects, and it's located in `~/homestead`.
+
 ## Available utilities
 
 ### Deploy to Production
