@@ -24,3 +24,15 @@ Checkout the source branch, merge its origin; checkout target branch, merge its 
 vagrant_provision [name]
 ```
 Update Laravel Homestead configuration for the project, and open it in your browser.
+
+### Ensure vagrant is running
+```bash
+vagrant_ensure_up
+```
+Restarts your vagrant machine to ensure that it is running. It is advisable to run this on login by adding this command to `~/.profile`.
+
+### Open a vagrant connection from anywhere
+```bash
+vagrant_open
+```
+Opens a ssh-connection to your default homestead install from any directory.
