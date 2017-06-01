@@ -1,3 +1,4 @@
 #!/bin/bash
 set -euo pipefail
-(cd ~/homestead; vagrant ssh)
+CURRENT_DIR=$(basename $PWD)
+(cd ~/homestead; vagrant ssh -- -t 'cd code/'"$CURRENT_DIR"'; exec $SHELL -l')

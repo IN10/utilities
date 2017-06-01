@@ -35,4 +35,4 @@ Restarts your vagrant machine to ensure that it is running. It is advisable to r
 ```bash
 vagrant_open
 ```
-Opens a ssh-connection to your default homestead install from any directory.
+Opens a ssh-connection to your default homestead install from any directory. Once logged-in to the vagrant machine, this will immediately run `cd code/{dirname}` where dirname is the name of the current folder you're in.
