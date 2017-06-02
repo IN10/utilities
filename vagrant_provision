@@ -31,7 +31,7 @@ settings['sites'] << {
 File.write(configFile, settings.to_yaml)
 puts "Updated settings"
 puts "Reloading vagrant configuration"
-`(cd #{path}; vagrant reload --provision)`
+`(cd #{path}; vagrant provision)`
 
 # Open browser
 `open http://#{name}.lcl`
