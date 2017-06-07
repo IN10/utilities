@@ -7,7 +7,7 @@ name = ARGV[0]
 abort "Usage: vagrant_provision [name]" unless name
 
 # Check the homestead file exists
-path = '../homestead/'
+path = '~/homestead/'
 configFile = "#{path}Homestead.yaml"
 if File.exist? configFile then
     settings = YAML::load(File.read(configFile))
