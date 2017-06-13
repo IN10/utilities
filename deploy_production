@@ -17,18 +17,28 @@ function print_usage {
 
 # Function that runs on the server
 function update_code {
-    cd www/
-    git fetch -p
+    cd www
+
+    if [ -f artisan ]; then
+        php artisan down
+        php artisan clear-compiled
+        php artisan cache:clear
+        php artisan config:clear
+        php artisan route:clear
+        php artisan view:clear
+    fi
+
     git checkout master
-    git merge origin/master
+    git pull --ff-only origin master
+
     if [ -f composer.lock ]; then
         composer install --no-interaction --prefer-dist --optimize-autoloader
     fi
+
     if [ -f artisan ]; then
-        echo "Found artisan"
-    else
-        echo "No artisan found"
+        php artisan up
     fi
+
     exit
 }
 
