@@ -28,8 +28,7 @@ function update_code {
         echo "No composer found"
     fi
     if [ -f artisan ]; then
-        echo "Found artisan: migrating"
-        php artisan migrate
+        echo "Found artisan"
     else
         echo "No artisan found"
     fi
