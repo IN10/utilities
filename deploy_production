@@ -22,10 +22,7 @@ function update_code {
     git checkout master
     git merge origin/master
     if [ -f composer.lock ]; then
-        echo "Found composer: installing"
         composer install --no-interaction --prefer-dist --optimize-autoloader
-    else
-        echo "No composer found"
     fi
     if [ -f artisan ]; then
         echo "Found artisan"
