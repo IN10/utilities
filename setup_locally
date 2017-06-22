@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Exit script on (almost) all errors
+# instead of continuing silently
+set -euo pipefail
+
+# Input parameter
+REPOSITORY=${1:-}
+LOCAL=${2:-}
+
+# Check inputs: must pass at least one parameter
+if [[ -z "$LOCAL" ]]; then
+    echo "Usage: setup_locally [repository] [local name]"
+    exit 1
+fi
+
+cd ~/code/
+git clone git@github.com:IN10/$REPOSITORY.git ./$LOCAL
+cd ./$LOCAL
+git checkout develop
+
+if [ -f .env.example ]; then
+    cp .env.example .env
+fi
+if [ -f composer.json ]; then
+    composer install
+fi
+if [ -f artisan ]; then
+    php artisan key:generate
+fi
+
+subl .
+vagrant_provision $LOCAL
+
+echo "Done"
