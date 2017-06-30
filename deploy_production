@@ -32,7 +32,7 @@ function update_code {
     git pull --ff-only origin master
 
     if [ -f composer.lock ]; then
-        composer install --no-interaction --prefer-dist --optimize-autoloader
+        composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
     fi
 
     if [ -f artisan ]; then
