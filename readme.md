@@ -35,7 +35,7 @@ Update Laravel Homestead configuration for the project, and open it in your brow
 ```bash
 vagrant_ensure_up
 ```
-Restarts your vagrant machine to ensure that it is running. It is advisable to run this on login by adding this command to `~/.profile`.
+Restarts your vagrant machine to ensure that it is running.
 
 ### Open a vagrant connection from anywhere
 ```bash
