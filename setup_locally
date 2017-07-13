@@ -33,3 +33,4 @@ subl .
 vagrant_provision $LOCAL
 
 echo "Done"
+cd ~/code/$LOCAL
