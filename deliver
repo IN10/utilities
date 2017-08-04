@@ -5,7 +5,7 @@ set -euo pipefail
 SOURCE=${1:-}
 TARGET=${2:-}
 
-# Check inputs: must pass at least one parameter
+# Check inputs: must pass at least two parameters
 if [[ -z "$SOURCE" ]] || [[ -z "$TARGET" ]]; then
     echo "Usage: deliver [source] [target]"
     exit 1
