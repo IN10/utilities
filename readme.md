@@ -23,7 +23,7 @@ Login to the production account, update the code, composer and migrations. Serve
 ```bash
 deliver source target
 ```
-Checkout the source branch, merge its origin; checkout target branch, merge its origin. Rebase source unto target and push everything.
+Fetch, checkout the source branch, and rebase origin/{source} locally unto source. Checkout target and rebase origin/{target} onto it. Merge (not rebase!) source into target and push both branches.
 
 ### Provision a vagrant site
 ```bash
