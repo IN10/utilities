@@ -17,7 +17,7 @@ fi
 cd ~/code/
 git clone git@github.com:IN10/$REPOSITORY.git ./$LOCAL
 cd ./$LOCAL
-git checkout develop || git checkout develop || true
+git checkout develop || git checkout test || true
 
 if [ -f .env.example ]; then
     cp .env.example .env
