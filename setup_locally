@@ -4,6 +4,10 @@
 # instead of continuing silently
 set -euo pipefail
 
+# When killed, kill all child processes (vagrant provisioning) too
+trap "exit" INT TERM ERR
+trap "kill 0" EXIT
+
 # Input parameter
 REPOSITORY=${1:-}
 LOCAL=${2:-}
@@ -13,6 +17,9 @@ if [[ -z "$LOCAL" ]]; then
     echo "Usage: setup_locally [repository] [local name]"
     exit 1
 fi
+
+# Vagrant provisioning takes the longest, so start that simultaneously
+vagrant_provision $LOCAL &
 
 cd ~/code/
 git clone git@github.com:IN10/$REPOSITORY.git ./$LOCAL
@@ -30,7 +37,9 @@ if [ -f artisan ]; then
 fi
 
 subl .
-vagrant_provision $LOCAL
+
+# Hold until vagrant provisioning has completed
+wait
 
 echo "Done"
 cd ~/code/$LOCAL
