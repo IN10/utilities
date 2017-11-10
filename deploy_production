@@ -4,14 +4,13 @@
 # instead of continuing silently
 set -euo pipefail
 
-# Input parameter
-PROJECT=${1:-}
-SERVER=${2:-01}
-
 # Print the usage instructions
 function print_usage {
-    echo "Usage: deploy_production [username] [server]"
-    echo "Valid servers are 01 and 02. Optional, default 01"
+    echo "Usage: deploy_production [options] username"
+    echo "Options:"
+    echo " -v  Deploy over the VPN"
+    echo " -s  Select server instance, valid choices are 01, 02 and 03. Default is 01."
+    echo "Example: $ deploy_production -v -s 02 waterbusbe to deploy the username waterbusbe on server 2 over a VPN connection"
     exit 1
 }
 
@@ -42,12 +41,59 @@ function update_code {
     exit
 }
 
+# Parse input parameters
+USERNAME="${@: -1}"
+
 # Check inputs: must pass at least one parameter
-if [[ -z "$PROJECT" ]]; then
+if [[ -z "$USERNAME" ]]; then
     print_usage
+    exit 1
+fi
+
+# Parse options
+SERVER="01"
+VPN=0
+while getopts "s:v" opt; do
+    case $opt in
+      s)
+       SERVER="$OPTARG"
+       ;;
+      v)
+       VPN=1
+       ;;
+    esac
+done
+
+# Validate server argument, must be 01, 02 or 03
+match=0
+servers=(01 02 03)
+for s in "${servers[@]}"; do
+    if [[ $s = "$SERVER" ]]; then
+        match=1
+        break
+    fi
+done
+if [[ $match = 0 ]]; then
+    echo "Unknown server, server must be 01, 02 or 03"
+    exit 1
+fi
+
+# VPN and Server 03 are incompatible
+if [[ "$VPN" = 1 ]] && [[ "$SERVER" = "03" ]]; then
+    echo "Server 03 not reachable over the VPN, deploy manually"
+    exit 2
+fi
+
+# Determine correct server address space (sc, sc-int, aws)
+SPACE="sc"
+if [[ "$VPN" = 1 ]]; then
+    SPACE="sc-int"
+fi
+if [[ "$SERVER" -eq "03" ]]; then
+    SPACE="aws"
 fi
 
 # Login to the server, copy all functions to it, and run the update function
-ssh $PROJECT@in10-web-p$SERVER.sc.nines.nl "$(typeset -f); update_code"
+ssh $USERNAME@in10-web-p$SERVER.$SPACE.nines.nl "$(typeset -f); update_code"
 
 echo "Done"
