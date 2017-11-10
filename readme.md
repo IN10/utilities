@@ -15,9 +15,9 @@ These utilities, especially the `vagrant_*` commands, make a couple of assumptio
 
 ### Deploy to Production
 ```bash
-deploy_production username [server]
+deploy_production [options] [username]
 ```
-Login to the production account, update the code, composer and migrations. Server is optional, defaults to 01.
+Login to the production account, update the code, composer and migrations. This commands accepts two options: -v for deploying over the VPN, and -s 02 for deploying on a specific server. Valid servers are 01, 02 and 03, default is 01.
 
 ### Deliver code to branch
 ```bash
