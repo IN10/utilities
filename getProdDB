@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function dump_database() {
+	cd www
+	source .env
+	mysqldump -u${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} | gzip > /tmp/dump.sql.gz
+}
+
+
+echo "############### Start import DB + Files ###############"
+REMOTE_SERVER="in10-web-p03.aws.nines.nl"
+REMOTE_USER="delftconvention"
+
+
+echo "############### DUMP database on remote ###############"
+ssh $REMOTE_USER@$REMOTE_SERVER "$(typeset -f); dump_database"
+echo "############### Copy database from remote ###############"
+scp $REMOTE_USER@$REMOTE_SERVER:/tmp/dump.sql.gz ./
+source .env
+echo "############### Improt database ###############"
+DB_PASSWORD=${DB_PASSWORD}
+if [[ ! -z $DB_PASSWORD ]]; then
+	gzcat ./dump.sql.gz | mysql -u${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE}
+else
+	gzcat ./dump.sql.gz | mysql -u${DB_USERNAME} ${DB_DATABASE}
+fi
+echo "############### remove database dump ###############"
+rm -rf dump.sql
+echo "############### Copy production files from remote ###############"
+rsync --verbose --delete --update -r $REMOTE_USER@$REMOTE_SERVER:~/www/public/storage/* public/storage
