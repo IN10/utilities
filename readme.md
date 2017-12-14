@@ -10,6 +10,7 @@ These utilities, especially the `vagrant_*` commands, make a couple of assumptio
 1. Your projects are all `~/code/*`. For example, a project named "waterbus" on my PC would be in `/Users/jakobbuis/code/waterbus`.
 1. All projects have their web roots in `./code/{name}/public`. Moving the web root will require manual tuning.
 1. You have a single Homestead installation for all projects, and it's located in `~/homestead`.
+1. You have DNSMasq or similar installed and all your projects are reachable over `http://{name}.test`.
 
 ## Available utilities
 
