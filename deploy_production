@@ -27,8 +27,7 @@ function update_code {
         php artisan view:clear
     fi
 
-    git checkout master
-    git pull --ff-only origin master
+    git pull --ff-only origin
 
     if [ -f composer.lock ]; then
         composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
