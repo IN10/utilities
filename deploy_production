@@ -8,9 +8,8 @@ set -euo pipefail
 function print_usage {
     echo "Usage: deploy_production [options] username"
     echo "Options:"
-    echo " -v  Deploy over the VPN"
     echo " -s  Select server instance, valid choices are 01, 02 and 03. Default is 01."
-    echo "Example: $ deploy_production -v -s 02 waterbusbe to deploy the username waterbusbe on server 2 over a VPN connection"
+    echo "Example: $ deploy_production -s 02 waterbusbe to deploy the username waterbusbe on server 2"
     exit 1
 }
 
@@ -51,14 +50,10 @@ fi
 
 # Parse options
 SERVER="01"
-VPN=0
 while getopts "s:v" opt; do
     case $opt in
       s)
        SERVER="$OPTARG"
-       ;;
-      v)
-       VPN=1
        ;;
     esac
 done
@@ -77,17 +72,8 @@ if [[ $match = 0 ]]; then
     exit 1
 fi
 
-# VPN and Server 03 are incompatible
-if [[ "$VPN" = 1 ]] && [[ "$SERVER" = "03" ]]; then
-    echo "Server 03 not reachable over the VPN, deploy manually"
-    exit 2
-fi
-
 # Determine correct server address space (sc, sc-int, aws)
 SPACE="sc"
-if [[ "$VPN" = 1 ]]; then
-    SPACE="sc-int"
-fi
 if [[ "$SERVER" -eq "03" ]]; then
     SPACE="aws"
 fi
