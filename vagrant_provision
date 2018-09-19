@@ -25,6 +25,7 @@ settings['databases'] << name
 settings['sites'] << {
     'map' => "#{name}.test",
     'to' => "/home/vagrant/code/#{name}/public",
+    'php' => '7.1',
 }
 
 # Write updated settings and reprovision vagrant configuration
