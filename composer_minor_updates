@@ -1,0 +1,4 @@
+#!/bin/bash
+composer update
+git add .
+git commit -m "composer minor updates"
