@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+php-cs-fixer --rules=@PSR2 fix app/
+phpcbf --standard=PSR12 app/
+rm -f .php_cs.cache
