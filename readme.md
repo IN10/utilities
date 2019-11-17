@@ -16,15 +16,19 @@ These utilities, especially the `vagrant_*` commands, make a couple of assumptio
 
 ### Deploy to Production
 ```bash
-deploy_production [options] [username]
+autofix_app
 ```
-Login to the production account, update the code, install composer dependencies. This process will clear caches where appropriate. This commands accepts two options: -v for deploying over the VPN, and -s 02 for deploying on a specific server. Valid servers are 01, 02 and 03, default is 01.
+Auto-format the app/ directory to match the coding standard (PSR-1 + PSR-2). Run this in the root-directory of your project. Does not add typehints where necessary, so you'll need to do that manually. You'll need to commit the change yourself.
 
-### Deliver code to branch
 ```bash
-deliver source target
+composer_minor_updates
 ```
-Fetch, checkout the source branch, and rebase origin/{source} locally unto source. Checkout target and rebase origin/{target} onto it. Merge (not rebase!) source into target and push both branches.
+Automatically installs semver-compatible upgrades and commits the result with a commit message of "composer minor upgrades". Run in the root-folder of your project.
+
+```bash
+deploy_production [server] [username]
+```
+Login to the production account, update the code, install composer dependencies. *Only use this to deploy projects which do not have deployer setup (legacy projects).* This process will clear caches where appropriate. Use only the server number in the command, e.g. `deploy_production 03 accrpas`.
 
 ### Provision a vagrant site
 ```bash
