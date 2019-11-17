@@ -14,17 +14,19 @@ These utilities, especially the `vagrant_*` commands, make a couple of assumptio
 
 ## Available utilities
 
-### Deploy to Production
+### Fix coding standard violations
 ```bash
 autofix_app
 ```
 Auto-format the app/ directory to match the coding standard (PSR-1 + PSR-2). Run this in the root-directory of your project. Does not add typehints where necessary, so you'll need to do that manually. You'll need to commit the change yourself.
 
+### Update composer dependencies
 ```bash
 composer_minor_updates
 ```
 Automatically installs semver-compatible upgrades and commits the result with a commit message of "composer minor upgrades". Run in the root-folder of your project.
 
+### Deploy to Production
 ```bash
 deploy_production [server] [username]
 ```
