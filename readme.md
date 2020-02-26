@@ -55,3 +55,9 @@ Opens a ssh-connection to your default homestead install from any directory. Onc
 setup_locally [git repository] [local name]
 ```
 Clone the project into `~/code/[local name]`, runs some basic setup tasks (composer, artisan, vagrant_provision) and opens the folder in sublime.
+
+### Bring master and develop up to date
+```bash
+update_local
+```
+Fetches changes, and brings your develop and master branch up to date.
