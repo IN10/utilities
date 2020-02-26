@@ -1,4 +1,5 @@
 #!/bin/bash
 composer update
-git add .
+git reset
+git add composer.lock
 git commit -m "composer minor updates"
