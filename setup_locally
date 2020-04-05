@@ -12,7 +12,7 @@ trap "kill 0" EXIT
 REPOSITORY=${1:-}
 LOCAL=${2:-}
 
-# Check inputs: must pass at least one parameter
+# Check inputs: must pass at least two parameters
 if [[ -z "$LOCAL" ]]; then
     echo "Usage: setup_locally [repository] [local name]"
     exit 1
